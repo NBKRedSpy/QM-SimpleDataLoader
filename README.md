@@ -27,6 +27,15 @@ There is a hash check on the CSharp-Assembly.dll so if the game changes at all, 
 
 The game's devs will be officially releasing data mods next week, making this useless. So don't judge me. ;)
 
+# Config
+
+The config file can be found at BepInEx\config\nbk_redspy.QM_SimpleDataLoader.cfg
+
+|Name|Default|Description|
+|--|--|--|
+|DumpData|true|If true, will extract the config data from the game and write the files to this mod's ./dump directory|
+
+
 # Installation
 
 ## BepInEx
@@ -68,3 +77,11 @@ Quasimorph
 
 # Source Code
 Source code is available on GitHub https://github.com/NBKRedSpy/QM-SimpleDataLoader
+
+
+# Change Log
+
+## 1.1.0
+
+* Changed hash check to load method's IL.  It's a more specific check than the entire assembly for a modification check.
+* Add the option to not dump the files.

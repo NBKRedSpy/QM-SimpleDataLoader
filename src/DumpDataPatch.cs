@@ -19,6 +19,8 @@ namespace QM_SimpleDataLoader
         public static void Prefix()
         {
 
+            if (Plugin.DumpData.Value == false) return;
+
             string currentAssetName = "";
 
             try

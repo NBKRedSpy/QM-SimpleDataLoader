@@ -4,10 +4,13 @@ using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
 using JetBrains.Annotations;
+using MGSC;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace QM_SimpleDataLoader
 {
-    [BepInPlugin("nbk_redspy.QM_SimpleDataLoader", "QM_SimpleDataLoader", "1.0.0")]
+    [BepInPlugin("nbk_redspy.QM_SimpleDataLoader", "QM_SimpleDataLoader", "1.1.0")]
     public class Plugin : BaseUnityPlugin
     {
         /// <summary>
@@ -34,10 +37,10 @@ namespace QM_SimpleDataLoader
                 "config_magnum"
             };
 
-        public static string AssemblySha256Hash {get;} = "87386A885B8E54AFD1F7E5AD06837EC1376862F1C956475BDC21E3CEF9D7460F";
+        public static string ConfigLoader_LoadSpecificFile_Hash {get;} = "441EA5482BE1A94C0FC993000001C4181BCA91F1C1EBC57855F3D93D68EDCD6A";
 
 
-        //public static ConfigEntry<bool> DumpData { get; set; }
+        public static ConfigEntry<bool> DumpData { get; set; }
         public static BepInEx.Logging.ManualLogSource Log { get; set; }
 
 
@@ -46,8 +49,7 @@ namespace QM_SimpleDataLoader
             string importPath = Path.Combine(Paths.PluginPath, "Import");
             Directory.CreateDirectory(importPath);
 
-
-            //DumpData = Config.Bind("General", "DumpData", false, "If true, will extract the config data from the game and write the files to this mod's ./dump directory");
+            DumpData = Config.Bind("General", "DumpData", true, "If true, will extract the config data from the game and write the files to this mod's ./dump directory");
         }
 
 
@@ -59,35 +61,45 @@ namespace QM_SimpleDataLoader
             //Since this mod will be short lived and ham fisted, just check if the game has been updated.
             string filePath = Path.Combine(Paths.ManagedPath, "Assembly-CSharp.dll");
 
-            if(!Sha256hash(filePath, AssemblySha256Hash))
+
+
+            //--Loader method change check.
+            //This mod completely copies and overrides the original loader. 
+            //  Since this change is so heavy handed, abort if the load has changed at all.
+            string loaderHash = GetLoadHash();
+
+            if(loaderHash != ConfigLoader_LoadSpecificFile_Hash)
             {
-                Log.LogError("The Assembly-CSharp.dll has changed.  Aborting the mod load");
+                Log.LogError($"ConfigLoader.LoadSpecificFile method has changed. Aborting the mod load. " +
+                    $"Expected Hash: {ConfigLoader_LoadSpecificFile_Hash} actual: {loaderHash} ");
             }
 
             Harmony harmony = new Harmony("nbk_redspy.QM_SimpleDataLoader");
             harmony.PatchAll();
-
         }
 
+
         /// <summary>
-        /// Returns true if the file's SHA256 Hash matches the provided hash.
+        /// Returns the SHA256 hash for the ConfigLoader.LoadSpecificFile method.
         /// </summary>
-        /// <param name="filename"></param>
         /// <returns></returns>
-        private static bool Sha256hash(string filename, string targetHash)
+        private static string GetLoadHash()
         {
+            MethodInfo method = AccessTools.Method(typeof(ConfigLoader), nameof(ConfigLoader.LoadSpecificFile));
+            byte[] ilData = method.GetMethodBody().GetILAsByteArray();
+
             var crypt = new System.Security.Cryptography.SHA256Managed();
             var hash = new System.Text.StringBuilder();
-            byte[] crypto = crypt.ComputeHash(File.ReadAllBytes(filename));
+            byte[] crypto = crypt.ComputeHash(ilData);
             foreach (byte theByte in crypto)
             {
                 hash.Append(theByte.ToString("x2"));
             }
 
+            return hash.ToString().ToUpper();
 
-            string stringHash = hash.ToString().ToUpper();
 
-            return stringHash == targetHash;
         }
+
     }
 }
