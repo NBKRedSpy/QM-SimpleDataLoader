@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace QM_SimpleDataLoader
 {
-    [BepInPlugin("nbk_redspy.QM_SimpleDataLoader", "QM_SimpleDataLoader", "1.1.0")]
+    [BepInPlugin("nbk_redspy.QM_SimpleDataLoader", "QM_SimpleDataLoader", "1.1.1")]
     public class Plugin : BaseUnityPlugin
     {
         /// <summary>
@@ -43,11 +43,16 @@ namespace QM_SimpleDataLoader
         public static ConfigEntry<bool> DumpData { get; set; }
         public static BepInEx.Logging.ManualLogSource Log { get; set; }
 
+        public static string ModsDirectory { get; private set; }
+
+        public static string ImportDirectory { get; private set; }  
 
         public Plugin()
         {
-            string importPath = Path.Combine(Paths.PluginPath, "Import");
-            Directory.CreateDirectory(importPath);
+            ModsDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            ImportDirectory = Path.Combine(Plugin.ModsDirectory, "Import");
+            Directory.CreateDirectory(ImportDirectory);
+
 
             DumpData = Config.Bind("General", "DumpData", true, "If true, will extract the config data from the game and write the files to this mod's ./dump directory");
         }

@@ -19,10 +19,7 @@ namespace QM_SimpleDataLoader
         //This is a really bad way to do this, but it will be replaced with official loading next week.
         private static bool Prefix(ConfigLoader __instance, Action<string, DescriptorsCollection> ___OnDescriptorsLoaded, string path)
         {
-            string importPath = Path.Combine(Paths.PluginPath, "Import");
-            Directory.CreateDirectory(importPath);
-
-            string importFileName = Path.Combine(importPath, path + ".txt");
+            string importFileName = Path.Combine(Plugin.ImportDirectory, path + ".txt");
 
             string resourceText; 
 

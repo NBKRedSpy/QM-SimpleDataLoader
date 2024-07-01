@@ -38,7 +38,7 @@
     <Compile Remove="packages\BepInEx.AssemblyPublicizer.MSBuild.0.4.2\contentFiles\cs\any\IgnoresAccessChecksToAttribute.cs" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y "$(ProjectDir)$(OutDir)$(AssemblyName).*" "D:\Games\Steam\steamapps\common\Quasimorph\BepInEx\plugins\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y "$(ProjectDir)$(OutDir)$(AssemblyName).*" "D:\Games\Steam\steamapps\common\Quasimorph\BepInEx\plugins\QM-SimpleDataLoader\"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Update="System">

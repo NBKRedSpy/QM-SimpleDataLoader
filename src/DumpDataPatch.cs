@@ -25,7 +25,7 @@ namespace QM_SimpleDataLoader
 
             try
             {
-                string dumpDirectory = Path.Combine(Paths.PluginPath, "Dump");
+                string dumpDirectory = Path.Combine(Plugin.ModsDirectory, "Dump");
 
                 Directory.CreateDirectory(dumpDirectory);
 
