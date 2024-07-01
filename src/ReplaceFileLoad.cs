@@ -90,22 +90,6 @@ namespace QM_SimpleDataLoader
             return false;
         }
 
-
-
-        public static bool TryGetReplacement(string filename, out string text)
-        {
-            if (filename == "config_items")
-            {
-                text = File.ReadAllText(@"C:\work\config_items.txt");
-                return true;
-            }
-            else
-            {
-                text = "";
-                return false;
-            }
-        }
-
     }
 
 
