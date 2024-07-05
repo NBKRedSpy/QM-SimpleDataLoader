@@ -37,9 +37,6 @@ namespace QM_SimpleDataLoader
                 "config_magnum"
             };
 
-        public static string ConfigLoader_LoadSpecificFile_Hash {get;} = "441EA5482BE1A94C0FC993000001C4181BCA91F1C1EBC57855F3D93D68EDCD6A";
-
-
         public static ConfigEntry<bool> DumpData { get; set; }
         public static BepInEx.Logging.ManualLogSource Log { get; set; }
 
@@ -65,19 +62,6 @@ namespace QM_SimpleDataLoader
 
             //Since this mod will be short lived and ham fisted, just check if the game has been updated.
             string filePath = Path.Combine(Paths.ManagedPath, "Assembly-CSharp.dll");
-
-
-
-            //--Loader method change check.
-            //This mod completely copies and overrides the original loader. 
-            //  Since this change is so heavy handed, abort if the load has changed at all.
-            string loaderHash = GetLoadHash();
-
-            if(loaderHash != ConfigLoader_LoadSpecificFile_Hash)
-            {
-                Log.LogError($"ConfigLoader.LoadSpecificFile method has changed. Aborting the mod load. " +
-                    $"Expected Hash: {ConfigLoader_LoadSpecificFile_Hash} actual: {loaderHash} ");
-            }
 
             Harmony harmony = new Harmony("nbk_redspy.QM_SimpleDataLoader");
             harmony.PatchAll();

@@ -1,7 +1,8 @@
 # Quasimorph Simple Data Loader
 
 ## Preface
-This mod will be obsolete in about a week.
+Note - Using BepInEx can cause some Steam Workshop mods to not work.
+When done using this mod, rename winhttp.dll and BepInEx will be disabled.  Restore the filename to use again.
 
 ## Info
 
@@ -81,7 +82,13 @@ Source code is available on GitHub https://github.com/NBKRedSpy/QM-SimpleDataLoa
 
 # Change Log
 
+## 1.2.0
+Removed Hash Check.  The IL is changing on new release.  
+The code is same.  It is probably the compiler changing the variable index names.
+
+
 ## 1.1.0
 
 * Changed hash check to load method's IL.  It's a more specific check than the entire assembly for a modification check.
 * Add the option to not dump the files.
+
