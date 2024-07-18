@@ -75,6 +75,9 @@ Quasimorph
 └───Quasimorph_Data
 ```
 
+# Support
+If you enjoy my mods and want to leave a tip, check out my [Ko-Fi](url=https://ko-fi.com/nbkredspy71915) page.
+Thanks!
 
 # Source Code
 Source code is available on GitHub https://github.com/NBKRedSpy/QM-SimpleDataLoader
