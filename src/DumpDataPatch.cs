@@ -19,20 +19,21 @@ namespace QM_SimpleDataLoader
         public static void Prefix()
         {
 
-            if (Plugin.DumpData.Value == false) return;
+            ModConfig config = Plugin.Config;
+
+            if (config.DumpData == false) return;
 
             string currentAssetName = "";
 
             try
             {
-                string dumpDirectory = Path.Combine(Plugin.ModsDirectory, "Dump");
-
+                string dumpDirectory = Plugin.ExportDir;
                 Directory.CreateDirectory(dumpDirectory);
 
                 foreach (string assetName in Plugin.ConfigFileNames)
                 {
 
-                    Plugin.Log.LogInfo($"Dumping {assetName}");
+                    Plugin.Log($"Dumping {assetName}");
 
                     currentAssetName = assetName;
 
@@ -43,14 +44,12 @@ namespace QM_SimpleDataLoader
                     }
 
                     File.WriteAllText(Path.Combine(dumpDirectory, assetName + ".txt"), obj.text);
-
                 }
-
             }
             catch (Exception ex)
             {
                 {
-                    Plugin.Log.LogError($"Error dumping data for '{currentAssetName}' {ex}");
+                    Plugin.LogError($"Error dumping data for '{currentAssetName}' {ex}");
                 }
             }
         }

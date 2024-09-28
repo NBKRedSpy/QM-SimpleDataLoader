@@ -1,0 +1,7 @@
+{
+  "UniqueModName": "NBKRedSpy_QM_SimpleDataLoader",
+  "Assemblies": [
+    "QM_SimpleDataLoader.dll"
+  ],
+  "Dependencies": []
+}

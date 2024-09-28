@@ -16,16 +16,26 @@ namespace QM_SimpleDataLoader
     public static class ReplaceFileLoad
     {
 
-        //This is a really bad way to do this, but it will be replaced with official loading next week.
+        /// <summary>
+        /// Replaces the game's load with the custom load.
+        /// </summary>
+        /// <remarks>
+        /// This is a really bad way to do this, but it will be replaced with official loading next week.
+        /// </remarks>
+        /// <param name="__instance"></param>
+        /// <param name="___OnDescriptorsLoaded"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         private static bool Prefix(ConfigLoader __instance, Action<string, DescriptorsCollection> ___OnDescriptorsLoaded, string path)
         {
-            string importFileName = Path.Combine(Plugin.ImportDirectory, path + ".txt");
+            string importFileName = Path.Combine(Plugin.ImportDir, path + ".txt");
 
-            string resourceText; 
+            string resourceText;
 
-            if(File.Exists(importFileName))
+            if (File.Exists(importFileName))
             {
-                Plugin.Log.LogInfo($"Importing config file: {importFileName}");
+                Plugin.Log($"Importing config file: {importFileName}");
                 resourceText = File.ReadAllText(importFileName);
             }
             else

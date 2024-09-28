@@ -1,97 +1,57 @@
 # Quasimorph Simple Data Loader
 
-## Preface
-Note - Using BepInEx can cause some Steam Workshop mods to not work.
-When done using this mod, rename winhttp.dll and BepInEx will be disabled.  Restore the filename to use again.
+![thumbnail icon](media/thumbnail.png)
 
-## Info
+A very simple utility which dumps out the game and allows the user to change the values.
 
-This mod allows a user to overwrite game data.
+This is primarily useful for users that want to tinker with various values locally.
 
+## Warning
 
-# Overwriting Data
-In the mod's directory there will be two folders: Import and Dump.
+When a new version of the game is released, the import directory for this mod should be deleted and the game run again to export the latest data. 
+Otherwise the game may crash or cause game corruption.
 
-When the game starts, the game's original config files will be exported to the Dump folders.
+# Usage
 
-If the user wishes to overwrite the game's settings, copy a file from the Dump folder to the import folder.  Make the changes on the imported file.
+## Source Data
 
-When the game loads, any file in the imported directory will be used instead of the game's file.
+When the game is run, the game's config_* files will be exported to the `%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph\QM_SimpleDataLoader\Export` folder.
+This data will be replaced on every game run.
 
-Note: This is a very simple loader.  The import file must contain everything that is in the dumped file.
+## Change Data
 
-If the game changes at all, this mod will stop working.  It can be updated if necessary.
+To modify the data, make a change to a file or files in the Export folder and copy them to the Import folder found at `%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph\QM_SimpleDataLoader\Import`
 
-# Dev Note
-This mod's code is really bad.  It completely copies and overrides the ConfigLoader.LoadSpecificFile.
-There is a hash check on the CSharp-Assembly.dll so if the game changes at all, it will abort the load.
+When the game is run, the changes will be imported.
 
-The game's devs will be officially releasing data mods next week, making this useless. So don't judge me. ;)
+It should be possible to add or remove items, but I have not tried that.  
 
-# Config
+### Important Notes
 
-The config file can be found at BepInEx\config\nbk_redspy.QM_SimpleDataLoader.cfg
+The file formats must be exactly as they are exported. The values can be modified, but any spaces, tabs, new lines, etc. must be identical.
+
+Note that some editors such as Visual Studio Code will convert the tab key to spaces instead of a tab.  The game requires tabs to delineate columns and must not be spaces.
+
+# Configuration
+
+The configuration file will be created on the first game run and can be found at `%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph\QM_SimpleDataLoader\config.json`.
 
 |Name|Default|Description|
 |--|--|--|
-|DumpData|true|If true, will extract the config data from the game and write the files to this mod's ./dump directory|
-
-
-# Installation
-
-## BepInEx
-
-If BepInEx 5 has been previously installed, skip to the [Mod Install](#mod-install) section.
-
-1. Download the BepInEx utility from https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.2/BepInEx_win_x64_5.4.23.2.zip
-2. Extract the contents of the zip file into the game's directory, ```<steam directory>\steamapps\common\Quasimorph``` .
-    - There will now be a ``BepInEx`` directory.
-3. Run the game and exit once the main screen is shown.  This is required to setup BepInEx.
-4. If BepInEx ran correctly, there should now be BepInEx\plugins directory in the game's directory.
-
-## Mod Install
-1. Download the QM-SimpleDataLoader.zip file from https://github.com/NBKRedSpy/QM-SimpleDataLoader/releases
-2. Extract the zip file into the BepInEx\plugins directory.
-3. Run the game.
-
-
-# Installation Issues.
-
-If the mod is not working and this is the first time BepInEx was installed, 99% of the time the files were copied to the wrong directory.
-
-After the mod is installed, the game's directory must have the directories and files listed below.  Otherwise, redo the install process.
-
-```
-Quasimorph
-|
-│   Quasimorph.exe
-│   winhttp.dll
-│   
-├───BepInEx
-│   └───plugins
-│       └───QM-EnableConsole
-│               QM-EnableConsole.dll
-│               
-└───Quasimorph_Data
-```
+|DumpData|true|If true, exports the `config_*` files to the export directory|
 
 # Support
-If you enjoy my mods and want to leave a tip, check out my [Ko-Fi](https://ko-fi.com/nbkredspy71915) page.
+If you enjoy my mods and want to buy me a coffee, check out my [Ko-Fi](https://ko-fi.com/nbkredspy71915) page.
 Thanks!
 
 # Source Code
-Source code is available on GitHub https://github.com/NBKRedSpy/QM-SimpleDataLoader
-
+Source code is available on GitHub at https://github.com/NBKRedSpy/QM_SimpleDataLoader
 
 # Change Log
 
-## 1.2.0
-Removed Hash Check.  The IL is changing on new release.  
-The code is same.  It is probably the compiler changing the variable index names.
 
+# 2.0.0
+Converted to Steam Workshop
 
-## 1.1.0
-
-* Changed hash check to load method's IL.  It's a more specific check than the entire assembly for a modification check.
-* Add the option to not dump the files.
-
+# 1.0.0
+Release
