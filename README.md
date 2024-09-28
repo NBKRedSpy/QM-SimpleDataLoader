@@ -64,6 +64,8 @@ Thanks!
 Source code is available on GitHub at https://github.com/NBKRedSpy/QM-SimpleDataLoader
 
 # Change Log
+# 2.0.1
+Added the new config_difficulty for version .8
 
 # 2.0.0
 Converted to Steam Workshop

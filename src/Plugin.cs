@@ -59,6 +59,7 @@ namespace QM_SimpleDataLoader
         public static List<string> ConfigFileNames { get; set; } = new List<string>()
             {
                 "config_globals",
+                "config_difficulty",
                 "config_items",
                 "config_monsters",
                 "config_drops",
