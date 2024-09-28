@@ -49,7 +49,7 @@ Note that some editors such as Visual Studio Code will convert the tab key to sp
 
 [h1]Configuration[/h1]
 
-The configuration file will be created on the first game run and can be found at [i]%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph\QM_SimpleDataLoader\config.json[/i].
+The configuration file will be created on the first game run and can be found at [i]config.json[/i].
 [table]
 [tr]
 [td]Name
@@ -76,7 +76,7 @@ Thanks!
 
 [h1]Source Code[/h1]
 
-Source code is available on GitHub at https://github.com/NBKRedSpy/QM_SimpleDataLoader
+Source code is available on GitHub at https://github.com/NBKRedSpy/QM-SimpleDataLoader
 
 [h1]Change Log[/h1]
 
