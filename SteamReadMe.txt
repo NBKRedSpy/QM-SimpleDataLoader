@@ -1,14 +1,22 @@
 [h1]Quasimorph Simple Data Loader[/h1]
 
 
-A very simple utility which dumps out the game and allows the user to change the values.
+A simple utility which can export the game's data and also allows users to change the values.
 
-This is primarily useful for users that want to tinker with various values locally.
+This is useful for users who want to see the values and/or modify them for local use.
+
+The data includes items, drop rates, mercs, etc.
+
+[h3]Data Export Mod[/h3]
+
+If the user only needs to view the data, consider using the "Data Export" mod as it is much less likely to break with game updates.
 
 [h2]Warning[/h2]
 
 When a new version of the game is released, the import directory for this mod should be deleted and the game run again to export the latest data.
 Otherwise the game may crash or cause game corruption.
+
+Due to how this mod currently works, it has a high chance of breaking on new versions of the game. If there are any issues, unsubscribe from the mod.
 
 [h1]Usage[/h1]
 
@@ -16,6 +24,14 @@ Otherwise the game may crash or cause game corruption.
 
 When the game is run, the game's config_* files will be exported to the [i]%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph\QM_SimpleDataLoader\Export[/i] folder.
 This data will be replaced on every game run.
+
+[h3]Data Overview[/h3]
+
+The files often contain more than one table, with each table starting with a [i]#<table name>[/i]
+
+The item ids generally do not match the name displayed in the game, so the user will need to find the actual item ids themselves.
+
+Unfortunately, I cannot assist with finding the ids in the files for users.
 
 [h2]Change Data[/h2]
 
@@ -27,7 +43,7 @@ It should be possible to add or remove items, but I have not tried that.
 
 [h3]Important Notes[/h3]
 
-The file formats must be exactly as they are exported. The values can be modified, but any spaces, tabs, new lines, etc. must be identical.
+The file formats must be exactly as they are exported. The values can be modified, but any spaces, tabs, new lines, etc. must be identical in format.
 
 Note that some editors such as Visual Studio Code will convert the tab key to spaces instead of a tab.  The game requires tabs to delineate columns and must not be spaces.
 
