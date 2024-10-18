@@ -80,6 +80,10 @@ Source code is available on GitHub at https://github.com/NBKRedSpy/QM-SimpleData
 
 [h1]Change Log[/h1]
 
+[h1]2.0.1[/h1]
+
+Added the new config_difficulty for version .8
+
 [h1]2.0.0[/h1]
 
 Converted to Steam Workshop
