@@ -22,7 +22,7 @@ Due to how this mod currently works, it has a high chance of breaking on new ver
 
 [h2]Source Data[/h2]
 
-When the game is run, the game's config_* files will be exported to the [i]%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph\QM_SimpleDataLoader\Export[/i] folder.
+When the game is run, the game's config_* files will be exported to the [i]%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph_ModConfigs\QM_SimpleDataLoader\Export[/i] folder.
 This data will be replaced on every game run.
 
 [h3]Data Overview[/h3]
@@ -35,7 +35,7 @@ Unfortunately, I cannot assist with finding the ids in the files for users.
 
 [h2]Change Data[/h2]
 
-To modify the data, make a change to a file or files in the Export folder and copy them to the Import folder found at [i]%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph\QM_SimpleDataLoader\Import[/i]
+To modify the data, make a change to a file or files in the Export folder and copy them to the Import folder found at [i]%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph_ModConfigs\QM_SimpleDataLoader\Import[/i]
 
 When the game is run, the changes will be imported.
 
@@ -79,6 +79,11 @@ Thanks!
 Source code is available on GitHub at https://github.com/NBKRedSpy/QM-SimpleDataLoader
 
 [h1]Change Log[/h1]
+
+[h1]2.1.0[/h1]
+[list]
+[*]Moved config file directory.
+[/list]
 
 [h1]2.0.1[/h1]
 

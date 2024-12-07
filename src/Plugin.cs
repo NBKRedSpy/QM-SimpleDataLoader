@@ -13,20 +13,19 @@ namespace QM_SimpleDataLoader
 {
     public static class Plugin
     {
-        public static string ModAssemblyName => Assembly.GetExecutingAssembly().GetName().Name;
+        public static ConfigDirectories ConfigDirectories = new ConfigDirectories();
 
-        public static string ConfigPath => Path.Combine(Application.persistentDataPath, ModAssemblyName, "config.json");
-        public static string ModPersistenceFolder => Path.Combine(Application.persistentDataPath, ModAssemblyName);
+        public static string ModAssemblyName => Assembly.GetExecutingAssembly().GetName().Name;
 
         /// <summary>
         /// The directory that the files will be imported from
         /// </summary>
-        public static string ImportDir => Path.Combine(ModPersistenceFolder, "Import");
+        public static string ImportDir => Path.Combine(ConfigDirectories.ModPersistenceFolder, "Import");
 
         /// <summary>
         /// The directory that the game's config data exported to
         /// </summary>
-        public static string ExportDir => Path.Combine(ModPersistenceFolder, "Export");
+        public static string ExportDir => Path.Combine(ConfigDirectories.ModPersistenceFolder, "Export");
 
         public static ModConfig Config { get; private set; }
 
@@ -34,11 +33,15 @@ namespace QM_SimpleDataLoader
         [Hook(ModHookType.BeforeBootstrap)]
         public static void BeforeBootstrap(IModContext context)
         {
-            Directory.CreateDirectory(ModPersistenceFolder);
+            Directory.CreateDirectory(ConfigDirectories.AllModsConfigFolder);
+            ConfigDirectories.UpgradeModDirectory();
+            Directory.CreateDirectory(ConfigDirectories.ModPersistenceFolder);
+
+
             Directory.CreateDirectory(ImportDir);
             Directory.CreateDirectory(ExportDir);
 
-            Config = ModConfig.LoadConfig(ConfigPath);
+            Config = ModConfig.LoadConfig(ConfigDirectories.ConfigPath);
 
             new Harmony("NBKRedSpy_" + ModAssemblyName).PatchAll();
         }
