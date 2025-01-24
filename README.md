@@ -26,13 +26,14 @@ Due to how this mod currently works, it has a high chance of breaking on new ver
 When the game is run, the game's config_* files will be exported to the `%AppData%\..\LocalLow\Magnum Scriptum Ltd\Quasimorph_ModConfigs\QM_SimpleDataLoader\Export` folder.
 This data will be replaced on every game run.
 
+The localization data is also exported, but currently is not imported.
+
 ### Data Overview
 The files often contain more than one table, with each table starting with a `#<table name>`
 
 The item ids generally do not match the name displayed in the game, so the user will need to find the actual item ids themselves.  
 
-Unfortunately, I cannot assist with finding the ids in the files for users.
-
+The debug's console command `itemscan` allows the user to mouse over an item to get the id.
 
 ## Change Data
 
@@ -68,7 +69,7 @@ Source code is available on GitHub at https://github.com/NBKRedSpy/QM-SimpleData
 # 2.1.1
 * Support for v.0.8.5
 * Changed file extensions from .txt to .tsv to match the Data Export Mod.
-
+* Exports localization data.
 
 # 2.1.0
 * Moved config file directory.
