@@ -56,23 +56,29 @@ namespace QM_SimpleDataLoader
             Debug.LogError($"[{ModAssemblyName}] {message} ");
         }
 
+        public static void LogError(Exception exception, string message = "")
+        {
+            Debug.LogError($"[{ModAssemblyName}] Error: {message}");
+            Debug.LogException(exception);
+        }
+
         /// <summary>
         /// The list of the config files that are supported.
         /// </summary>
         public static List<string> ConfigFileNames { get; set; } = new List<string>()
             {
-                "config_globals",
                 "config_difficulty",
+                "config_globals",
                 "config_items",
-                "config_monsters",
-                "config_drops",
+                "config_items_properties",
+                "config_items_drops",
+                "config_units",
+                "config_units_drops",
                 "config_wounds",
                 "config_mercenaries",
                 "config_spacesandbox",
                 "config_barter",
-                "config_magnum"
+                "config_magnum",
             };
-
-
     }
 }

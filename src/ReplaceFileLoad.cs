@@ -27,9 +27,9 @@ namespace QM_SimpleDataLoader
         /// <param name="path"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private static bool Prefix(ConfigLoader __instance, Action<string, DescriptorsCollection> ___OnDescriptorsLoaded, string path)
+        public static bool Prefix(ConfigLoader __instance, Action<string, DescriptorsCollection> ___OnDescriptorsLoaded, string path)
         {
-            string importFileName = Path.Combine(Plugin.ImportDir, path + ".txt");
+            string importFileName = Path.Combine(Plugin.ImportDir, path + ".tsv");
 
             string resourceText;
 
@@ -88,7 +88,6 @@ namespace QM_SimpleDataLoader
                     if (descriptorsCollection != null)
                     {
                         ___OnDescriptorsLoaded.Invoke(text, descriptorsCollection);
-                        //((Action<string, DescriptorsCollection>)__instance.OnDescriptorsLoaded).Invoke(text, descriptorsCollection);
                     }
                 }
                 else

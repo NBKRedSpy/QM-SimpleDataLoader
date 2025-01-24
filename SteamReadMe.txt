@@ -80,6 +80,12 @@ Source code is available on GitHub at https://github.com/NBKRedSpy/QM-SimpleData
 
 [h1]Change Log[/h1]
 
+[h1]2.1.1[/h1]
+[list]
+[*]Support for v.0.8.5
+[*]Changed file extensions from .txt to .tsv to match the Data Export Mod.
+[/list]
+
 [h1]2.1.0[/h1]
 [list]
 [*]Moved config file directory.

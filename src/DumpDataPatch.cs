@@ -23,33 +23,20 @@ namespace QM_SimpleDataLoader
 
             if (config.DumpData == false) return;
 
-            string currentAssetName = "";
-
             try
             {
+
+                DataExportProcessor dataExportProcessor = new DataExportProcessor();
+
                 string dumpDirectory = Plugin.ExportDir;
-                Directory.CreateDirectory(dumpDirectory);
+                dataExportProcessor.Export(Plugin.ExportDir);
 
-                foreach (string assetName in Plugin.ConfigFileNames)
-                {
 
-                    Plugin.Log($"Dumping {assetName}");
-
-                    currentAssetName = assetName;
-
-                    TextAsset obj = Resources.Load(assetName) as TextAsset;
-                    if (obj == null)
-                    {
-                        throw new NotImplementedException("Failed open " + assetName + " in Resources folder.");
-                    }
-
-                    File.WriteAllText(Path.Combine(dumpDirectory, assetName + ".txt"), obj.text);
-                }
             }
             catch (Exception ex)
             {
                 {
-                    Plugin.LogError($"Error dumping data for '{currentAssetName}' {ex}");
+                    Plugin.LogError(ex, "Error dumping data");
                 }
             }
         }

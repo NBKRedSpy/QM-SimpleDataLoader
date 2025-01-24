@@ -64,6 +64,12 @@ Thanks!
 Source code is available on GitHub at https://github.com/NBKRedSpy/QM-SimpleDataLoader
 
 # Change Log
+
+# 2.1.1
+* Support for v.0.8.5
+* Changed file extensions from .txt to .tsv to match the Data Export Mod.
+
+
 # 2.1.0
 * Moved config file directory.
 
