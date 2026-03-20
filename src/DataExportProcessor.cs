@@ -45,6 +45,7 @@ namespace QM_SimpleDataLoader
                  "config_keybinding",
                  "config_magnum",
                  "config_mercenaries",
+                 "config_pacts",
                  "config_questlines",
                  "config_spacesandbox",
                  "config_units",

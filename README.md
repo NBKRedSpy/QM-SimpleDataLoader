@@ -66,6 +66,9 @@ Source code is available on GitHub at https://github.com/NBKRedSpy/QM-SimpleData
 
 # Change Log
 
+# 2.2.0 
+* Added Pacts data
+
 # 2.1.2
 * Added 0.9.5 resources
 
