@@ -33,6 +33,9 @@ namespace QM_SimpleDataLoader
         [Hook(ModHookType.BeforeBootstrap)]
         public static void BeforeBootstrap(IModContext context)
         {
+
+            Config = ModConfig.LoadConfig(ConfigDirectories.ConfigPath);
+
             Directory.CreateDirectory(ConfigDirectories.AllModsConfigFolder);
             ConfigDirectories.UpgradeModDirectory();
             Directory.CreateDirectory(ConfigDirectories.ModPersistenceFolder);
@@ -41,7 +44,6 @@ namespace QM_SimpleDataLoader
             Directory.CreateDirectory(ImportDir);
             Directory.CreateDirectory(ExportDir);
 
-            Config = ModConfig.LoadConfig(ConfigDirectories.ConfigPath);
 
             new Harmony("NBKRedSpy_" + ModAssemblyName).PatchAll();
         }

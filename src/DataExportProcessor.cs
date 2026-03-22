@@ -1,4 +1,5 @@
-﻿using MGSC;
+﻿using HarmonyLib;
+using MGSC;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,72 +16,38 @@ namespace QM_SimpleDataLoader
     internal class DataExportProcessor
     {
 
-        public void Export(string exportDirectory)
+        public void LocalizationExport(string exportDirectory)
         {
             Directory.CreateDirectory(exportDirectory);
 
-            LocalizationExport(exportDirectory);
-            ConfigDataExport(exportDirectory);
-        }
-
-        private void LocalizationExport(string exportDirectory)
-        {
             TextAsset textAsset = Resources.Load("localization") as TextAsset;
             string exportFilePath = Path.Combine(exportDirectory, "localization.tsv");
 
             WriteIfDifferent(exportFilePath, textAsset.text);
         }
 
-        private void ConfigDataExport(string exportDirectory)
+        public void ConfigDataExport(string exportDirectory, string path)
         {
-            List<string> configFileNames = new List<string>()
+            try
             {
-                 "config_barter",
-                 "config_difficulty",
-                 "config_events",
-                 "config_globals",
-                 "config_items",
-                 "config_items_drops",
-                 "config_items_properties",
-                 "config_keybinding",
-                 "config_magnum",
-                 "config_mercenaries",
-                 "config_pacts",
-                 "config_questlines",
-                 "config_spacesandbox",
-                 "config_units",
-                 "config_units_drops",
-                 "config_wounds"
-            };
+                TextAsset obj = Resources.Load(path) as TextAsset;
+                if (obj == null)
+                {
+                    throw new NotImplementedException("Failed open " + path + " in Resources folder.");
+                }
 
-            string currentAssetName;
-            foreach (string assetName in configFileNames)
+                string exportFilePath = Path.Combine(exportDirectory, path + ".tsv");
+
+                string output = obj.text;
+
+                //Save some disk wear 
+                WriteIfDifferent(exportFilePath, output);
+
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    currentAssetName = assetName;
-
-                    TextAsset obj = Resources.Load(assetName) as TextAsset;
-
-                    if (obj == null)
-                    {
-                        throw new NotImplementedException("Failed open " + assetName + " in Resources folder.");
-                    }
-
-
-                    string exportFilePath = Path.Combine(exportDirectory, assetName + ".tsv");
-
-                    string output = obj.text;
-
-                    //Save some disk wear 
-                    WriteIfDifferent(exportFilePath, output);
-
-                }
-                catch (Exception ex)
-                {
-                    UnityEngine.Debug.LogError($"Error processing asset '{assetName}'. {ex.Message}");
-                    UnityEngine.Debug.LogException(ex);
-                }
+                UnityEngine.Debug.LogError($"Error processing asset '{path}'. {ex.Message}");
+                UnityEngine.Debug.LogException(ex);
             }
         }
 
