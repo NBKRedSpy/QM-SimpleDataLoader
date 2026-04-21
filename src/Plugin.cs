@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using MGSC;
+using SimpleDataLoader_Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace QM_SimpleDataLoader
 {
-    public static class Plugin
+    public class Plugin : BootstrapMod
     {
         public static ConfigDirectories ConfigDirectories = new ConfigDirectories();
 
@@ -30,8 +31,12 @@ namespace QM_SimpleDataLoader
         public static ModConfig Config { get; private set; }
 
 
-        [Hook(ModHookType.BeforeBootstrap)]
-        public static void BeforeBootstrap(IModContext context)
+        public Plugin(HookEvents hookEvents, bool isBeta) : base(hookEvents, isBeta)
+        {
+            hookEvents.BeforeBootstrap += BeforeBootstrap;
+        }
+
+        public void BeforeBootstrap(IModContext context)
         {
             Directory.CreateDirectory(ConfigDirectories.AllModsConfigFolder);
             ConfigDirectories.UpgradeModDirectory();
