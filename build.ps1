@@ -3,7 +3,8 @@
 try {
 
     # Use convention to the project name
-    $projectName = dir .. -Directory | select -Unique parent | %{$_.Parent.Name}
+    # $projectName = dir .. -Directory | select -Unique parent | %{$_.Parent.Name}
+    $projectName = "QM_SimpleDataLoader"
 
     mkdir package -ErrorAction SilentlyContinue | Out-Null
     Remove-Item package\* -Recurse -Force -ErrorAction SilentlyContinue
@@ -13,8 +14,8 @@ try {
     # ---- Build the projects.  The projects will automatically deploy to the Steam Workshop folder.
 
     "Bootstrap"
-    dotnet clean "./src\$($projectName)_Bootstrap.csproj"
-    dotnet build -c Release "./src\$($projectName)_Bootstrap.csproj" -o $packageFolder
+    dotnet clean "./src\SimpleDataLoader_Bootstrap.csproj"
+    dotnet build -c Release "./src\SimpleDataLoader_Bootstrap.csproj" -o $packageFolder
 
     "Stable"
     dotnet clean "..\main-repo\src\$($projectName).csproj"
