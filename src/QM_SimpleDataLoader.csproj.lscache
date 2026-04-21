@@ -65,6 +65,7 @@ Properties/AssemblyInfo.cs
 ReplaceFileLoad.cs
 
 [metadataReferences]
+../../bootstrap/src/bin/Debug/net48/SimpleDataLoader_Bootstrap.dll
 <NETFXREF>/v4.8/
  Facades/netstandard.dll
  Microsoft.CSharp.dll
@@ -79,14 +80,13 @@ ReplaceFileLoad.cs
  System.Runtime.Serialization.dll
  System.Xml.dll
  System.Xml.Linq.dll
-<NUGET>/
- lib.harmony/2.3.3/lib/net48/0Harmony.dll
- newtonsoft.json/13.0.3/lib/net45/Newtonsoft.Json.dll
+<NUGET>/newtonsoft.json/13.0.3/lib/net45/Newtonsoft.Json.dll
 d:/games/steam/steamapps/common/Quasimorph/Quasimorph_Data/Managed/
+ 0Harmony.dll
  UnityEngine.CoreModule.dll
  UnityEngine.dll
  UnityEngine.InputLegacyModule.dll
-obj/Debug/net48/publicized/Assembly-CSharp.dll
+obj/Debug/net48/publicized/Assembly-CSharp-publicized.dll
 
 [analyzerConfigFiles]
 obj/Debug/net48/QM_SimpleDataLoader.GeneratedMSBuildEditorConfig.editorconfig

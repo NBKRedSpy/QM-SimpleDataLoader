@@ -28,6 +28,10 @@
 	  <None Remove="Move To Root\**" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove=".gitignore" />
+	  <None Remove="QM_SimpleDataLoader.csproj.lscache" />
+	</ItemGroup>
+	<ItemGroup>
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>$(ManagedPath)Newtonsoft.Json.dll</HintPath>
 			<Private>false</Private>

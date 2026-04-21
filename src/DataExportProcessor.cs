@@ -35,22 +35,24 @@ namespace QM_SimpleDataLoader
         {
             List<string> configFileNames = new List<string>()
             {
-                 "config_barter",
-                 "config_difficulty",
-                 "config_events",
-                 "config_globals",
-                 "config_items",
-                 "config_items_drops",
-                 "config_items_properties",
-                 "config_keybinding",
-                 "config_magnum",
-                 "config_mercenaries",
-                 "config_pacts",
-                 "config_questlines",
-                 "config_spacesandbox",
-                 "config_units",
-                 "config_units_drops",
-                 "config_wounds"
+                "config_globals",
+                "config_difficulty",
+                "config_items",
+                "config_items_properties",
+                "config_crafting",
+                "config_items_drops",
+                "config_faction_drops",
+                "config_units",
+                "config_units_drops",
+                "config_wounds",
+                "config_mercenaries",
+                "config_pacts",
+                "config_spacesandbox",
+                "config_questlines",
+                "config_barter",
+                "config_magnum",
+                "config_events",
+                "config_keybinding",
             };
 
             string currentAssetName;
