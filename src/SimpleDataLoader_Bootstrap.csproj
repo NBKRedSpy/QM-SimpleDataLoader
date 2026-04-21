@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+	  <LangVersion>latest</LangVersion>
+    <OutputType>Library</OutputType>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <SteamId>3336450523</SteamId>
+  </PropertyGroup>
+	<PropertyGroup>
+		<GAME_NAME>Quasimorph</GAME_NAME>
+		<GAME_PATH Condition="!Exists('$(GAME_PATH)')">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App $(GAME_STEAM_ID)', 'InstallLocation', null, RegistryView.Registry64, RegistryView.Registry32))</GAME_PATH>
+		<_SteamLibraryPath>$([MSBuild]::GetRegistryValueFromView('HKEY_CURRENT_USER\SOFTWARE\Valve\Steam', 'SteamPath', null, RegistryView.Registry32))</_SteamLibraryPath>
+		<GAME_PATH Condition="!Exists('$(GAME_PATH)') AND '$(_SteamLibraryPath)' != ''">$(_SteamLibraryPath)\steamapps\common\$(GAME_NAME)</GAME_PATH>
+		<GAME_PATH Condition="!Exists('$(GAME_PATH)')">C:\Program Files\Steam\steamapps\common\$(GAME_NAME)</GAME_PATH>
+		<GAME_PATH Condition="!Exists('$(GAME_PATH)')">C:\Program Files (x86)\Steam\steamapps\common\$(GAME_NAME)</GAME_PATH>
+		<WorkshopPath>$(GAME_PATH)\..\..\workshop\content\2059170\$(SteamId)\</WorkshopPath>
+		<ManagedPath>$(GAME_PATH)\$(GAME_NAME)_Data\Managed\</ManagedPath>
+		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+		<PackageFolder>$(ProjectDir)../package/</PackageFolder>
+	</PropertyGroup>
+	<PropertyGroup>
+		<!-- Comment this first line out to use the actual version.-->
+		<Assembly-CSharpPath Condition="Exists('./lib-stripped\Assembly-CSharp-publicized.dll')">lib-stripped/Assembly-CSharp-publicized.dll</Assembly-CSharpPath>
+		<Assembly-CSharpPath Condition="!Exists('lib-stripped\Assembly-CSharp-publicized.dll')">$(ManagedPath)Assembly-CSharp.dll</Assembly-CSharpPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.json" Version="13.0.3" ExcludeAssets="runtime" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>$(Assembly-CSharpPath)</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>$(ManagedPath)UnityEngine.CoreModule.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+
+	<Target Name="SteamWorkshopDeploy" Condition="'$(SteamId)'!=''" AfterTargets="PostBuildEvent">
+		<ItemGroup>
+			<FilesToDelete Include="$(WorkshopPath)/*" />
+			<Delete Files="@(FilesToDelete)" />
+			<BuildSource Include="$(TargetDir)/*.*;../modmanifest.json; ../version-info.json" />
+		</ItemGroup>
+		<Message Importance="high" Text="Workshop folder: $(WorkshopPath)" />
+		<MakeDir Directories="$(WorkshopPath)" ContinueOnError="true" />
+		<Copy SourceFiles="@(BuildSource)" DestinationFolder="$(WorkshopPath)" />
+	</Target>
+
+</Project>

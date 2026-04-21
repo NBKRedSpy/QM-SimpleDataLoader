@@ -1,0 +1,9 @@
+{
+  "UniqueModName": "NBKRedSpy_SimpleDataLoader",
+  "Assemblies": [
+    "SimpleDataLoader_Bootstrap.dll"
+  ],
+  "Dependencies": [],
+  "SteamTags": [
+  ]
+}
