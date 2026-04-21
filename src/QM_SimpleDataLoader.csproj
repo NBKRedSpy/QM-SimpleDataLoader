@@ -18,17 +18,27 @@
 	<PropertyGroup>
 		<WorkshopPath>$(GAME_PATH)\..\..\workshop\content\2059170\$(SteamId)\</WorkshopPath>
 		<ManagedPath>$(GAME_PATH)\$(GAME_NAME)_Data\Managed\</ManagedPath>
+		<!-- Comment this first line out to use the actual version.-->
+		<Assembly-CSharpPath Condition="Exists('lib-stripped\Assembly-CSharp-publicized.dll')">lib-stripped/Assembly-CSharp-publicized.dll</Assembly-CSharpPath>
+		<Assembly-CSharpPath Condition="!Exists('lib-stripped\Assembly-CSharp-publicized.dll')">$(ManagedPath)Assembly-CSharp.dll</Assembly-CSharpPath>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="Move To Root\**" />
 	  <EmbeddedResource Remove="Move To Root\**" />
 	  <None Remove="Move To Root\**" />
 	</ItemGroup>
-
-
 	<ItemGroup>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>$(ManagedPath)Newtonsoft.Json.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="0Harmony">
+			<HintPath>$(ManagedPath)0Harmony.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
 		<Reference Include="Assembly-CSharp" publicize="true">
-			<HintPath>$(ManagedPath)Assembly-CSharp.dll</HintPath>
+			<HintPath>$(Assembly-CSharpPath)</HintPath>
 			<Private>False</Private>
 		</Reference>
 		<Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -49,41 +59,41 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<IncludeAssets>build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<ExcludeAssets>runtime;</ExcludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Lib.harmony" Version="2.3.3" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="Newtonsoft.json" Version="13.0.3" />
 		<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\bootstrap\src\SimpleDataLoader_Bootstrap.csproj" />
 	</ItemGroup>
 	<PropertyGroup>
 	    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
 		<PackageFolder>$(ProjectDir)../package/</PackageFolder>
-
 	</PropertyGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="@echo off&#xD;&#xA;set deployDir=&quot;$(WorkshopPath)&quot;&#xD;&#xA;&#xD;&#xA;xcopy /f /y &quot;../modmanifest.json&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;&#xD;&#xA;if '$(SteamId)'=='' (echo SteamId in project not set.  Aborting Workshop Deployment &amp;&amp; exit)&#xD;&#xA;echo deploying to %25deployDir%25&#xD;&#xA;&#xD;&#xA;mkdir &quot;$(WorkshopPath)&quot;&#xD;&#xA;&#xD;&#xA;xcopy /f /y &quot;$(ProjectDir)../media/thumbnail.png&quot; %25deployDir%25&#xD;&#xA;xcopy /f /y &quot;$(ProjectDir)../modmanifest.json&quot; %25deployDir%25&#xD;&#xA;&#xD;&#xA;xcopy /f /y   &quot;$(TargetDir)$(TargetName).*&quot; %25deployDir%25&#xD;&#xA;" />
-		<ItemGroup>
-			<WorkshopSourceFile Include="$(WorkshopPath)*.*" />
-			<PackageRemoveFiles Include="$(PackageFolder)$(TargetName)/*.pdb" />
-		</ItemGroup>
-	</Target>
-	<Target Condition="'$(SteamId)'!=''" Name="PostBuildPackage" AfterTargets="PostBuildEvent">
-		<ItemGroup>
-			<WorkshopSourceFile Include="$(WorkshopPath)*.*" />
-			<PackageRemoveFiles Include="$(PackageFolder)$(TargetName)/*.pdb" />
-		</ItemGroup>
 
-		<Message Text="---------- Creating Package: $(PackageFolder)$(TargetName)/*.pdb" Importance="high" />
-		<RemoveDir Directories="$(PackageFolder)" />
-		<Copy SourceFiles="@(WorkshopSourceFile)" DestinationFolder="$(PackageFolder)$(TargetName)"></Copy>
-		<Delete Files="@(PackageRemoveFiles)" />
-		<ZipDirectory SourceDirectory="$(PackageFolder)" DestinationFile="$(PackageFolder)../$(TargetName).zip" Overwrite="true" />
+	<Target Name="NoSteamIdMessage" Condition="'$(SteamId)'==''" AfterTargets="PostBuildEvent">
+		<Message Importance="high" Text="The SteamId is not set in the project.  Aborting Steam Workshop folder deployment." />
 	</Target>
-	<ItemGroup>
-	  <Reference Update="System">
-	    <Private>False</Private>
-	  </Reference>
-	</ItemGroup>
+
+	<Target Name="SteamWorkshopDeploy" Condition="'$(SteamId)'!=''" AfterTargets="PostBuildEvent">
+		<PropertyGroup>
+			<VersionWorkshopPath Condition="$(ProjectDir.Contains('beta'))">$(WorkshopPath)beta</VersionWorkshopPath>
+			<VersionWorkshopPath Condition="$(VersionWorkshopPath)==''">$(WorkshopPath)stable</VersionWorkshopPath>
+		</PropertyGroup>
+		<ItemGroup>
+			<FilesToDelete Include="$(VersionWorkshopPath)/*" />
+			<Delete Files="@(FilesToDelete)" />
+			<BuildSource Include="$(TargetDir)/*.*" Exclude="$(TargetDir)/*bootstrap.*" />
+			<!-- Exclude workaround for build ignorning private assets for Project References-->
+		</ItemGroup>
+		<Message Importance="high" Text="ProjectDir folder -&gt; $(ProjectDir)" />
+		<Message Importance="high" Text="Workshop folder: $(VersionWorkshopPath)" />
+		<MakeDir Directories="$(VersionWorkshopPath)" ContinueOnError="true" />
+
+		<Copy SourceFiles="@(BuildSource)" DestinationFolder="$(VersionWorkshopPath)" />
+		<Delete Files="$(VersionWorkshopPath)/*bootstrap.dll" />
+	</Target>
 </Project>
